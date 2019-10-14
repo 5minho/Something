@@ -57,7 +57,7 @@ jobs:
 
       - run:
           name: zip artifacts
-          command: zip something-app.zip  build/libs/*
+          command: zip something-app.zip  ~/repo/*
 
       - aws-s3/copy:
           from: something-app.zip
