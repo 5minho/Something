@@ -55,16 +55,19 @@ jobs:
       - store_artifacts:
           path: build/libs
 
-      - aws-s3/sync:
-          from: build/libs
+      - run:
+          name: zip artifacts
+          command: zip something-app.zip  build/libs/*
+
+      - aws-s3/copy:
+          from: something-app.zip
           to: 's3://something-ci-cd'
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_REGION
-          overwrite: true
 
       - aws-code-deploy/deploy-bundle:
           application-name: something-deploy
           deployment-group: something-deploy-group
           bundle-bucket: something-ci-cd
-          bundle-key: something-ci-cd
+          bundle-key: something-app
