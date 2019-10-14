@@ -60,7 +60,7 @@ jobs:
           command: mkdir deploy && cd deploy && zip something-app.zip  ../*
 
       - aws-s3/copy:
-          from: something-app.zip
+          from: ~/repo/deploy
           to: 's3://something-ci-cd'
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
