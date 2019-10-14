@@ -67,6 +67,12 @@ jobs:
           aws-region: AWS_REGION
           overwrite: true
 
+      - aws-code-deploy/push-bundle:
+          application-name: something-deploy
+          bundle-bucket: something-ci-cd
+          bundle-key: something-app
+          bundle-type: zip
+
       - aws-code-deploy/deploy-bundle:
           application-name: something-deploy
           deployment-group: something-deploy-group
