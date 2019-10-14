@@ -59,12 +59,13 @@ jobs:
           name: zip artifacts
           command: mkdir deploy && cd deploy && zip something-app.zip  ../*
 
-      - aws-s3/copy:
+      - aws-s3/sync:
           from: ~/repo/deploy
           to: 's3://something-ci-cd'
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_REGION
+          overwrite: true
 
       - aws-code-deploy/deploy-bundle:
           application-name: something-deploy
