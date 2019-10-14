@@ -3,6 +3,8 @@
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
 version: 2.1
+orbs:
+  aws-s3: circleci/aws-s3@1.0.11
 jobs:
   build:
     docker:
@@ -51,3 +53,11 @@ jobs:
       # As the JAR was only assembled in the first build container, build/libs will be empty in all the other build containers.
       - store_artifacts:
           path: build/libs
+
+      - aws-s3/sync:
+          from: build/libs
+          to: 's3://something-ci-cd'
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
+          overwrite: true
