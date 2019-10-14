@@ -5,6 +5,7 @@
 version: 2.1
 orbs:
   aws-s3: circleci/aws-s3@1.0.11
+  aws-code-deploy: circleci/aws-code-deploy@1.0.0
 jobs:
   build:
     docker:
@@ -61,3 +62,10 @@ jobs:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_REGION
           overwrite: true
+
+      - aws-code-deploy/deploy:
+          application-name: something-deploy
+          deployment-group: something-deploy-group
+          service-role-arn: something-ci-cd-codeDeploy-role
+          bundle-bucket: something-ci-cd
+          bundle-key: something-ci-cd
